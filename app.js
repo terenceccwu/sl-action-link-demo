@@ -106,6 +106,25 @@ app.post('/notify_success_and_reload_page', (req, res) => {
   })
 })
 
+app.post('/timeout', (req, res) => {
+  setTimeout(() => {
+    res.json({
+      actions: [
+        {
+          type: 'NOTIFY',
+          message: {
+            title_translations: {
+              'en': `Did not handle timeout`,
+              'zh-hant': `沒有處理超時`,
+            },
+            type: 'success',
+          }
+        }
+      ]
+    })
+  }, 3000)
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
