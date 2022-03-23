@@ -1,0 +1,14 @@
+{
+  "name": "sl-action-link-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://git.heroku.com/sl-action-link-1.git",
+  "author": "Terence Wu <terence@shoplineapp.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
