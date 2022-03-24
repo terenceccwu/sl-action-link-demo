@@ -1,4 +1,6 @@
 const express = require('express')
+const airtable = require('./air-table')
+const ActionLink = require('./entities/ActionLink');
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -125,6 +127,32 @@ app.post('/timeout', (req, res) => {
   }, 3000)
 })
 
+
+app.get('/action_links/:id', async (req, res) => {
+  const response = await airtable.request('GET', `/action_links/${req.params.id}`);
+  if (response.status > 200) {
+    return res.status(response.status).json(response.data)
+  }
+
+  return res.json(ActionLink.fromAirTable(response.data))
+})
+
+app.get('/action_links', async (req, res) => {
+  let query = '';
+
+  if (req.query.page_key) {
+    query += `filterByFormula=page_key="${req.query.page_key}"`
+  }
+
+  const response = await airtable.request('GET', `/action_links?${query}`);
+  if (response.status > 200) {
+    return res.status(response.status).json(response.data)
+  }
+
+  return res.json({
+    items: (response.data.records || []).map(ActionLink.fromAirTable)
+  })
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
