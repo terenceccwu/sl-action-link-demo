@@ -1,3 +1,7 @@
+if (process.env.ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const express = require('express')
 const airtable = require('./air-table')
 const ActionLink = require('./entities/ActionLink');
